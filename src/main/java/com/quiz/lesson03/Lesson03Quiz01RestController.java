@@ -39,11 +39,12 @@ public class Lesson03Quiz01RestController {
 	}
 	
 	// http://localhost:8080/lesson03/quiz01/3?area=90&price=130000
-//	@RequestMapping("/3")
-//	public List<RealEstate> quiz01_3(
-//			@RequestParam("area") int area
-//			, @RequestParam("price") int price) {
-//		
-//	}
+	// input: area, price(필수), output: List<RealEstate>
+	@RequestMapping("/3")
+	public List<RealEstate> quiz01_3(
+			@RequestParam("area") int area,
+			@RequestParam("price") int price) {
+		return realEstateBO.getRealEstateListByAreaAndPrice(area, price);
+	}
 	
 }

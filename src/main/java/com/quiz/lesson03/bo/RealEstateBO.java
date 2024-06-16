@@ -19,7 +19,6 @@ public class RealEstateBO {
 		this.realEstateMapper = realEstateMapper;
 	}
 
-	// method
 	// input: id(필수), output: RealEstate
 	public RealEstate getRealEstateById(int id) {
 		return realEstateMapper.selectRealEstateById(id);
@@ -28,5 +27,10 @@ public class RealEstateBO {
 	// input: rentPrice(필수), output: List<RealEstate>
 	public List<RealEstate> getRealEstateListByRentPrice(int rentPrice) {
 		return realEstateMapper.selectRealEstateListByRentPrice(rentPrice);
+	}
+	
+	// input: area, price(필수), output: List<RealEstate>
+	public List<RealEstate> getRealEstateListByAreaAndPrice(int area, int price) {
+		return realEstateMapper.selectRealEstateListByAreaAndPrice(area, price);
 	}
 }
