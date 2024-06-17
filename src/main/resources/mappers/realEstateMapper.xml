@@ -113,4 +113,14 @@
 			, NOW()
 		)
 	</insert>
+	
+	<!-- 3강 quiz03 -->
+	<update id="updateRealEstateById" parameterType="map">
+		UPDATE `real_estate`
+		SET
+			`type` = #{type},
+			`price` = #{price}
+		WHERE
+			`id` = #{id}
+	</update>
 </mapper>
