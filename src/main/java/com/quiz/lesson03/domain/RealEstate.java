@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 // Java bean
 public class RealEstate {
+
 	// field
 	private int id;
 	private int realtorId;
@@ -14,7 +15,7 @@ public class RealEstate {
 	private Integer rentPrice; // !!null이 들어올 수 있음
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
-	
+
 	// getter, setter
 	public int getId() {
 		return id;
