@@ -50,4 +50,9 @@ public class RealEstateBO {
 			int id, String type, int price) {
 		return realEstateMapper.updateRealEstateById(id, type, price);
 	}
+	
+	// delete, input:id, output:rowCount
+	public int deleteRealEstateById(int id) {
+		return realEstateMapper.deleteRealEstateById(id);
+	}
 }
