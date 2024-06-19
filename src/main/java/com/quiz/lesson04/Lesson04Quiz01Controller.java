@@ -32,25 +32,42 @@ public class Lesson04Quiz01Controller {
 	@PostMapping("/add-seller")
 	public String addSeller(
 			@RequestParam("nickname") String nickname,
-			@RequestParam(value = "temperature", required = false) Double temperature,
+			@RequestParam(value = "temperature", defaultValue = "36.5") double temperature,
 			@RequestParam(value = "profileImageUrl", required = false) String profileImageUrl) {
 		
 		// DB에 데이터 추가
 		sellerBO.addSeller(nickname, temperature, profileImageUrl);
 		
+		// 성공화면으로 이동
 		return "lesson04/afterAddSeller";
 	}
 	
+	// 방금 가입한 판매자 1명 화면
 	// http://localhost:8080/lesson04/quiz01/seller-info-view
+	// http://localhost:8080/lesson04/quiz01/seller-info-view?id=3
 	@GetMapping("/seller-info-view")
-	public String sellerInfoView(Model model) {
+	public String sellerInfoView(
+			@RequestParam(value = "id", required = false) Integer id,
+			Model model) {
+		
 		// DB에서 판매자 데이터 가져오기
-		Seller seller = sellerBO.getSeller();
+		Seller seller = null;
 		
-		// 데이터 Model에 넣기
-		model.addAttribute("result", seller);
+		if (id == null) {
+			seller = sellerBO.getLatestSeller();
+		} else {
+			seller = sellerBO.getSellerById(id);
+		}
+		
+		if (seller == null) {
+			seller = sellerBO.getLatestSeller();
+		}
+
+		// Model에 데이터 넣기
+		model.addAttribute("seller", seller);
 		model.addAttribute("title", "판매자 정보");
-		
+
+		// HTML 주소 리턴
 		return "lesson04/sellerInfo";
 	}
 }

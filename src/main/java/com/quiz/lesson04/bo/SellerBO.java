@@ -16,13 +16,20 @@ public class SellerBO {
 		this.sellerMapper = sellerMapper;
 	}
 	
+	// Controller - addSeller
 	// input: 3params, output: rowCount
-	public int addSeller(String nickname, Double temperature, String profileImageUrl) {
+	public int addSeller(String nickname, double temperature, String profileImageUrl) {
 		return sellerMapper.insertSeller(nickname, temperature, profileImageUrl);
 	}
 	
+	// Controller - sellerInfoView
 	// input: X, output: Seller
-	public Seller getSeller() {
-		return sellerMapper.selectSeller();
+	public Seller getLatestSeller() {
+		return sellerMapper.selectLatestSeller();
+	}
+	
+	// input: id, output: Seller/null
+	public Seller getSellerById(int id) {
+		return sellerMapper.selectSellerById(id);
 	}
 }

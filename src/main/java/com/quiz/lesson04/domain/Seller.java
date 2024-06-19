@@ -8,7 +8,7 @@ public class Seller {
 	private int id;
 	private String nickname;
 	private String profileImageUrl;
-	private Double temperature;
+	private double temperature;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>판매자 정보</title>
+	<title th:text="${title}">결과</title>
 	
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
@@ -11,11 +11,12 @@
 </head>
 <body>
 	<div class="container">
-		<h2 th:text="${title}">???</h2>
-		<img width="200px" th:src="@{${result.profileImageUrl}}" alt="판매자 이미지">
-		<h1 th:text="${result.nickname}">판매자 닉네임</h1>
-		<h3 class="text-warning" th:text="${result.temperature}">온도</h3>
+		<h1 th:text="${title}">???</h1>
+		<div>
+			<img width="250px" th:src="${seller.profileImageUrl}" alt="판매자 이미지">
+		</div>
+		<div class="display-3" th:text="${seller.nickname}">판매자 닉네임</div>
+		<div class="display-4 text-warning font-weight-bold" th:text="${seller.temperature}">온도</div>
 	</div>
-
 </body>
 </html>

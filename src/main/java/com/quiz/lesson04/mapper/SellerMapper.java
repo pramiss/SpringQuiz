@@ -7,12 +7,16 @@ import com.quiz.lesson04.domain.Seller;
 
 @Mapper // Spring bean
 public interface SellerMapper {
-	
+
 	// input:3params, output:rowCount
 	public int insertSeller(
 			@Param("nickname") String nickname,
-			@Param("temperature") Double temperature,
+			@Param("temperature") double temperature,
 			@Param("profileImageUrl") String profileImageUrl);
+
+	// input: X, output: Seller
+	public Seller selectLatestSeller();
 	
-	public Seller selectSeller();
+	// input: id, output: Seller/null
+	public Seller selectSellerById(int id);
 }
