@@ -2,14 +2,53 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>날씨 정보</title>
     
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    
+    <!-- 내 스타일시트 -->
+    <link rel="stylesheet" href="/weather_history/css/weatherList.css">
 </head>
 <body>
-
+	<div class="wrap">
+		<section class="contents bg-success d-flex">
+			<nav class="bg-primary px-2">
+				<div class="a-center py-4">
+					<img width="25" src="/weather_history/img/logo_color.png" alt="logo-color">
+					<span class="text-white font-weight-bold ml-2">기상청</span>
+				</div>
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<a href="/weather-history/weather-list-view" class="nav-link text-white">날씨</a>
+					</li>
+					<li class="nav-item">
+						<a href="/weather-history/add-weather-view" class="nav-link text-white">날씨입력</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link text-white">테마날씨</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link text-white">관측 기후</a>
+					</li>
+				</ul>
+			</nav>
+			<article class="bg-danger px-5">
+				<h1 class="pt-2">과거 날씨</h1>
+				<table></table>
+			</article>
+		</section>
+		<footer class="y-center text-secondary">
+			<div>
+				<img height="70" src="/weather_history/img/logo_gray.jpg" alt="logo-grey">
+			</div>
+			<div class="ml-1">
+				<div>(07062) 서울시 동작구 여의대방로16길 61</div>
+				<div>Copyright@2024 KMA. All Rights RESERVED.</div>
+			</div>
+		</footer>
+	</div>
 </body>
 </html>

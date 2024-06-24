@@ -1,0 +1,26 @@
+.a-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.x-center {
+	display: flex;
+	justify-content: center;
+}
+.y-center {
+	display: flex;
+	align-items: center;
+}
+
+.contents {
+	min-height: 600px;
+}
+footer {
+	height: 100px;
+}
+nav {
+	width: 200px;
+}
+article {
+	flex: 1;
+}
