@@ -1,15 +1,15 @@
 package com.quiz.weather_history;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.quiz.weather_history.bo.WeatherHistoryBO;
 import com.quiz.weather_history.domain.WeatherHistory;
@@ -40,9 +40,14 @@ public class WeatherHistoryController {
 	// 날씨 추가 후 리다이렉트, /weather-history/add-weather
 	@PostMapping("/add-weather")
 	public String addWeather(
-			@ModelAttribute WeatherHistory weatherHistory) {
+			@RequestParam("date") LocalDate date,
+			@RequestParam("weather") String weather,
+			@RequestParam("temperatures") double temperatures,
+			@RequestParam("precipitation") double precipitation,
+			@RequestParam("microDust") String microDust,
+			@RequestParam("windSpeed") double windSpeed) {
 		// 1. DB에 받은 데이터 추가
-		weatherHistoryBO.addWeatherHistory(weatherHistory);
+		weatherHistoryBO.addWeatherHistory(date, weather, temperatures, precipitation, microDust, windSpeed);
 		
 		// 2. weather list view 화면으로 리다이렉트
 		return "redirect:/weather-history/weather-list-view";
