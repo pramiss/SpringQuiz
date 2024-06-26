@@ -3,9 +3,12 @@ package com.quiz.weather_history.domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class WeatherHistory {
 	// field
 	private int id; 
+	@DateTimeFormat(pattern = "yyyy-MM-dd") // 마찬가지로 LocalDate는 필요없다.
 	private LocalDate date;
 	private String weather; 
 	private double temperatures; 

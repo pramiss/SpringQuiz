@@ -115,9 +115,11 @@
 	
 	<!-- javascript -->
 	<script>
-	$( function() {
-		$('#date').datepicker({dateFormat: 'yy-mm-dd'});
-	} );
+		$(document).ready(function() {
+			$( function() {
+				$('#date').datepicker({dateFormat: 'yy-mm-dd'});
+			} );
+		}); //-- ready
 	</script>
 </body>
 </html>

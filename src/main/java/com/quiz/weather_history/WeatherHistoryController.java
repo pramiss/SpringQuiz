@@ -40,7 +40,7 @@ public class WeatherHistoryController {
 	// 날씨 추가 후 리다이렉트, /weather-history/add-weather
 	@PostMapping("/add-weather")
 	public String addWeather(
-			@RequestParam("date") LocalDate date,
+			@RequestParam("date") /* DateTimeFormat(pattern = "yyyy-MM-dd") */ LocalDate date, // LocalDate는 자동변환되므로 어노테이션이 필요없다.
 			@RequestParam("weather") String weather,
 			@RequestParam("temperatures") double temperatures,
 			@RequestParam("precipitation") double precipitation,
