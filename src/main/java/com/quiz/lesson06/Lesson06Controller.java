@@ -1,6 +1,8 @@
 package com.quiz.lesson06;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,17 +29,22 @@ public class Lesson06Controller {
 		return "lesson06/addBookmark";
 	}
 	
-	// 즐겨찾기 추가하기 : Ajax -> ResponseBody로 return 해야함!!
+	// 즐겨찾기 추가하기 : Ajax 요청 -> ResponseBody로 return 해야함!!
 	@ResponseBody
 	@PostMapping("/add-bookmark")
-	public String addBookmark(
+	public Map<String, Object> addBookmark(
 			@RequestParam("name") String name,
 			@RequestParam("url") String url) {
 		// insert db
 		int rowCount = bookmarkBO.addBookmark(name, url);
 		
-		// return to AJAX
-		return "success";
+		// 성공 JSON
+		// {"code":200, "result":"성공"}
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("result", "성공");
+
+		return result; // JSON String
 	}
 	
 	// 즐겨찾기 목록 페이지

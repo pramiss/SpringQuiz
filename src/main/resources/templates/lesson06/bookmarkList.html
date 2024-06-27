@@ -12,12 +12,14 @@
 <body>
 	<div class="container">
 		<h1>즐겨찾기 목록</h1>
+
 		<table class="table">
 			<thead>
 				<tr>
 					<th>No.</th>
 					<th>이름</th>
 					<th>주소</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -27,6 +29,7 @@
 					<td>
 						<a th:href="@{${bookmark.url}}" th:text="${bookmark.url}"></a>
 					</td>
+					<td><button class="deleteBtn btn btn-danger">삭제</button></td>
 				</tr>
 			</tbody>
 		</table>
