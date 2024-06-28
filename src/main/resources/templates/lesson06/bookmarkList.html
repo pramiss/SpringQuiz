@@ -24,7 +24,7 @@
 			</thead>
 			<tbody>
 				<tr th:each="bookmark : ${bookmarkList}">
-					<td th:text="${bookmark.id}"></td>
+					<td th:text="${bookmark.id}" class="deleteId"></td>
 					<td th:text="${bookmark.name}"></td>
 					<td>
 						<a th:href="@{${bookmark.url}}" th:text="${bookmark.url}"></a>
@@ -34,5 +34,32 @@
 			</tbody>
 		</table>
 	</div>
+	
+	<script>
+		$(document).ready(function() {
+			// 삭제하기 버튼
+			$(".deleteBtn").on('click', function(e) {
+				let deleteId = $(this).closest('tr').find(".deleteId").text();
+				
+				// AJAX 요청 - delete
+				$.ajax({
+					// request
+					type:"POST"
+					, url:"/lesson06/delete-bookmark"
+					, data:{"id":deleteId}
+					
+					// response
+					// {"code":200}
+					, success:function(data) {
+						location.href="/lesson06/bookmark-list-view";
+						alert("삭제되었습니다.");
+					}
+					, error:function(error) {
+						alert("error in AJAX");
+					}
+				});
+			});
+		}); //-- ready
+	</script>
 </body>
 </html>

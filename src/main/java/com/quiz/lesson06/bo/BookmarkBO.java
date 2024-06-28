@@ -23,4 +23,14 @@ public class BookmarkBO {
 	public int addBookmark(String name, String url) {
 		return bookmarkMapper.insertBookmark(name, url);
 	}
+	
+	// is_dupli, input: url, output: boolean
+	public boolean isDupliationByUrl(String url) {
+		return bookmarkMapper.isDupliationByUrl(url);
+	}
+	
+	// DELETE, input: id, output: x
+	public void deleteBookmarkById(int id) {
+		bookmarkMapper.deleteBookmarkById(id);
+	}
 }
