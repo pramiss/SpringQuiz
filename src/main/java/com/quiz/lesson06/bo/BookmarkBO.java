@@ -25,12 +25,16 @@ public class BookmarkBO {
 	}
 	
 	// is_dupli, input: url, output: boolean
-	public boolean isDupliationByUrl(String url) {
-		return bookmarkMapper.isDupliationByUrl(url);
+	public boolean isDupliationUrl(String url) {
+		Bookmark bookmark = bookmarkMapper.selectBookmarkByUrl(url);
+		
+		// null이면 중복 아님 -> false
+		// null 아니면 중복임 -> true
+		return bookmark != null ? true : false;
 	}
 	
-	// DELETE, input: id, output: x
-	public void deleteBookmarkById(int id) {
-		bookmarkMapper.deleteBookmarkById(id);
+	// DELETE, input: id, output: rowCount
+	public int deleteBookmarkById(int id) {
+		return bookmarkMapper.deleteBookmarkById(id);
 	}
 }

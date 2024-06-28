@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+:root {
+	--nav-link-color: #E3871F;
+	--nav-hover-color: #A76417;
+}
+
+.reserve .real-time-reserved {background-color:#B1520F;}
+.reserve .confirm {background-color: #CF6317;}
+.reserve .inquiry {background-color:#B1520F;}
+
+.a-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.x-center {
+	display: flex;
+	justify-content: center;
+}
+.y-center {
+	display: flex;
+	align-items: center;
+}
+
+header {
+	height: 100px;
+}
+nav {
+	
+}
+.contents {
+	min-height: 600px;
+	padding: 40px 0;
+}
+footer {
+	height: 100px;
+}
+
+.nav-text, .nav-text:hover {
+	font-weight: bold;
+	color: #fff;
+	background: var(--nav-link-color);
+}

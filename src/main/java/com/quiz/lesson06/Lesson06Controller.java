@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,11 +60,11 @@ public class Lesson06Controller {
 	
 	// AJAX 요청 - url 중복확인
 	@ResponseBody
-	@GetMapping("/is-duplication-url")
+	@PostMapping("/is-duplication-url")
 	public Map<String, Object> isDuplicationUrl(
 			@RequestParam("url") String url) {
-		// DB에서 중복검사
-		boolean isDuplication = bookmarkBO.isDupliationByUrl(url);
+		// DB에서 중복검사 - select
+		boolean isDuplication = bookmarkBO.isDupliationUrl(url);
 		
 		// AJAX에 data 돌려주기
 		// {"code":200, "is_duplication":true}
@@ -73,17 +74,23 @@ public class Lesson06Controller {
 		return result;
 	}
 	
-	// AJAX 요청 - delete 북마크
+	// AJAX 요청 - id로 delete 북마크
 	@ResponseBody
-	@PostMapping("/delete-bookmark")
+	@DeleteMapping("/delete-bookmark")
 	public Map<String, Object> deleteBookmark(
 			@RequestParam("id") int id) {
 		// DB에서 id에 해당하는 행 삭제
-		bookmarkBO.deleteBookmarkById(id);
-		
+		int rowCount = bookmarkBO.deleteBookmarkById(id);
+
 		// AJAX에 return
 		Map<String, Object> result = new HashMap<>();
-		result.put("code", 200);
-		return result; 
+		if (rowCount > 0) {
+			result.put("code", 200);
+			result.put("result", "성공");	
+		} else {
+			result.put("code", 500);
+			result.put("error_message", "삭제할 항목이 존재하지 않습니다.");
+		}
+		return result;
 	}
 }

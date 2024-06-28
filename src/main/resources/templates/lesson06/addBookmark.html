@@ -22,9 +22,11 @@
 			<label for="url">주소</label>
 			<div class="d-flex justify-content-between">
 				<input type="text" id="url" class="form-control flex-1 mr-2">
-				<button id="urlCheckBtn" class="btn btn-info">중복확인</button>
+				<button type="button" id="duplicationBtn" class="btn btn-info">중복확인</button>
 			</div>
-			<small id="urlStatusArea"></small>
+			<small id="duplicationText" class="text-danger d-none">중복된 URL 입니다.</small>
+			<small id="availableText" class="text-success d-none">사용가능한 URL 입니다.</small>
+			<small id="needCheckText" class="text-warning d-none">중복확인을 해주세요.</small>
 		</div>
 		<button type="button" id="addBtn" class="btn btn-success w-100 mt-3">추가</button>
 	</div>
@@ -34,11 +36,17 @@
 		$(document).ready(function() {
 			let isDuplicationCheck = false;
 			
-			// url input시 isDuplicationCheck = false
+			// url 입력시 중복확인 필요문구
 			$("#url").on('input', function() {
+				// text
+				$("#duplicationText").addClass("d-none");
+				$("#availableText").addClass("d-none");
+				$("#needCheckText").addClass("d-none");
 				isDuplicationCheck = false;
-				$("#urlStatusArea").empty();
-				$("#urlStatusArea").append('<span class="text-info">중복확인을 해주세요.</span>');
+				
+				if ($(this).val() != "") {
+					$("#needCheckText").removeClass("d-none");	
+				}
 			});
 			
 			// 즐겨찾기 추가 버튼
@@ -93,38 +101,45 @@
 			}); //-- addBtn
 			
 			// 중복확인 버튼
-			$("#urlCheckBtn").on('click', function() {
-				// urlStatusArea 초기화
-				$("#urlStatusArea").empty();
+			$("#duplicationBtn").on('click', function() {
+				// text 초기화
+				$("#duplicationText").addClass("d-none");
+				$("#availableText").addClass("d-none");
+				$("#needCheckText").addClass("d-none");
 				
-				// 주소를 입력했는지 확인
+				// 주소입력 기본 validation
 				let url = $("#url").val().trim();
 				
 				if (!url) {
-					$("#urlStatusArea").append('<span class="text-danger">주소를 입력하세요.</span>');
+					alert("주소를 입력하세요.");
+					return;
+				}
+				
+				if (url.startsWith("http://") == false
+						&& url.startsWith("https://") == false) {
+					alert("주소는 http 혹은 https로 시작해야합니다.");
 					return;
 				}
 				
 				// 주소가 중복인지 확인 - AJAX: db select
 				$.ajax({
 					// Request
-					type:"GET"
+					type:"POST"
 					, url:"/lesson06/is-duplication-url"
 					, data:{"url":url}
 					
 					// Response
 					, success:function(data) {
-						console.log(data.is_duplication);
-						// {"code":200, "is_duplication":true}
+						// {"code":200, "is_duplication":true} => 중복
 						if (data.is_duplication) {
-							$("#urlStatusArea").append('<span class="text-danger">이미 존재하는 주소입니다.</span>');
+							$("#duplicationText").removeClass("d-none");
 						} else {
-							$("#urlStatusArea").append('<span class="text-success">사용 가능한 주소입니다.</span>');
+							$("#availableText").removeClass("d-none");
 							isDuplicationCheck = true;
 						}
 					}
 					, error:function(error) {
-						console.log("error in AJAX");
+						console.log("중복확인에 실패했습니다.");
 					}
 				});
 			});

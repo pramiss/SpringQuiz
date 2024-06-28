@@ -18,9 +18,9 @@ public interface BookmarkMapper {
 			@Param("name") String name,
 			@Param("url") String url);
 	
-	// is_dupli, input: url, output: boolean
-	public boolean isDupliationByUrl(String url);
+	// is_dupli, input: url, output: Bookmark
+	public Bookmark selectBookmarkByUrl(String url);
 	
-	// DELETE, input: id, output: x
-	public void deleteBookmarkById(int id);
+	// DELETE, input: id, output: rowCount
+	public int deleteBookmarkById(int id);
 }

@@ -29,9 +29,13 @@
 			, NOW()
 		)
 	</insert>
-	<select id="isDupliationByUrl" parameterType="String" resultType="boolean">
+	<select id="selectBookmarkByUrl" parameterType="String" resultType="com.quiz.lesson06.domain.Bookmark">
 		SELECT
-			COUNT(1)
+			`id`
+			, `name`
+			, `url`
+			, `createdAt`
+			, `updatedAt`
 		FROM
 			`bookmark`
 		WHERE
