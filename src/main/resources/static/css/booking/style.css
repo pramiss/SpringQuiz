@@ -5,10 +5,11 @@
 	--nav-hover-color: #A76417;
 }
 
-.reserve .real-time-reserved {background-color:#B1520F;}
-.reserve .confirm {background-color: #CF6317;}
-.reserve .inquiry {background-color:#B1520F;}
-
+label {
+	margin-bottom: 5px;
+	margin-top: 10px;
+}
+ 
 .a-center {
 	display: flex;
 	justify-content: center;
@@ -23,6 +24,9 @@
 	align-items: center;
 }
 
+#wrap {
+	min-width: 960px;
+}
 header {
 	height: 100px;
 }

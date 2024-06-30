@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>예약하기</title>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    
+    <!-- datepicker -->
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    
+    
+    <link rel="stylesheet" href="/css/booking/style.css">
+</head>
+<body>
+	<div id="wrap" class="container">
+		<header class="a-center">
+			<div class="display-4">통나무 펜션</div>
+		</header>
+		<nav>
+			<ul class="nav nav-fill">
+				<li class="nav-item"><a href="#" class="nav-link nav-text">팬션소개</a></li>
+				<li class="nav-item"><a href="#" class="nav-link nav-text">객실보기</a></li>
+				<li class="nav-item"><a href="/booking/make-booking-view" class="nav-link nav-text">예약하기</a></li>
+				<li class="nav-item"><a href="/booking/booking-list-view" class="nav-link nav-text">예약목록</a></li>
+			</ul>
+		</nav>
+		<section class="contents">
+			<div class="container-sm">
+				<h1 class="text-center">예약하기</h1>
+				
+				<label for="name">이름</label>
+				<input type="text" id="name" class="form-control">
+				<label for="date">예약날짜</label>
+				<input type="text" id="date" class="form-control">
+				<label for="day">숙박일수</label>
+				<input type="text" id="day" class="form-control">
+				<label for="headcount">숙박인원</label>
+				<input type="text" id="headcount" class="form-control">
+				<label for="phoneNumber">전화번호</label>
+				<input type="text" id="phoneNumber" class="form-control">
+				
+				<button id="makeBookingBtn" class="btn btn-warning w-100 mt-4">예약하기</button>
+			</div>
+		</section>
+		<footer class="y-center">
+			<small class="text-secondary">
+				<div>제주특별자치도 제주시 애월읍</div>
+				<div>사업자등록번호: 111-22-255222 / 농어촌민박사업자지정 / 대표:김동욱</div>
+				<div>Copyright 2024 tongnamu. All right reserved.</div>
+			</small>
+		</footer>
+	</div>
+	
+	<script>
+		$(document).ready(function() {
+			// datepicker
+			$( function() {
+				$( "#date" ).datepicker({dateFormat:"yy-mm-dd"});
+			} );
+			
+			// 예약하기 버튼
+			$("#makeBookingBtn").on('click', function() {
+				// validation
+				let name = $("#name").val();
+				
+				if (!name) {
+					alert("이름을 입력하세요.");
+					return;
+				}
+				
+				let date = $("#date").val();
+				
+				if (!date) {
+					alert("예약날짜를 입력하세요.");
+					return;
+				}
+				
+				let day = $("#day").val();
+				
+				if (!day) {
+					alert("숙박일수를 입력하세요.");
+					return;
+				}
+				
+				let headcount = $("#headcount").val();
+				
+				if (!headcount) {
+					alert("숙박인원을 입력하세요.");
+					return;
+				}
+				
+				let phoneNumber = $("#phoneNumber").val();
+				
+				if (!phoneNumber) {
+					alert("전화번호를 입력하세요.");
+					return;
+				}
+				
+				// AJAX 요청으로 db에 insert
+				$.ajax({
+					// request
+					type:"POST"
+					, url:"/booking/make-booking"
+					, data:{"name":name, "date":date, "day":day, "headcount":headcount, "phoneNumber":phoneNumber}
+					
+					//response
+					, success:function(data) {
+						// {"code":200, "isInsert":true}
+						if (data.isInsert) {
+							alert("예약되었습니다.");
+							location.href="/booking/booking-list-view";
+						} else {
+							alert("예약실패. 다시 시도해 주세요.");
+						}
+					}
+					, error:function(error){
+						console.log("AJAX: insert 실패");
+					}
+					
+					
+				}); //-- ajax
+			}); // -- 예약하기 버튼
+		}); //-- ready
+	</script>
+</body>
+</html>
