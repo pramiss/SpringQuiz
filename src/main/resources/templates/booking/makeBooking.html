@@ -23,14 +23,14 @@
 		</header>
 		<nav>
 			<ul class="nav nav-fill">
-				<li class="nav-item"><a href="#" class="nav-link nav-text">팬션소개</a></li>
+				<li class="nav-item"><a href="/booking/check-booking-view" class="nav-link nav-text">팬션소개</a></li>
 				<li class="nav-item"><a href="#" class="nav-link nav-text">객실보기</a></li>
 				<li class="nav-item"><a href="/booking/make-booking-view" class="nav-link nav-text">예약하기</a></li>
 				<li class="nav-item"><a href="/booking/booking-list-view" class="nav-link nav-text">예약목록</a></li>
 			</ul>
 		</nav>
-		<section class="contents">
-			<div class="container-sm">
+		<section class="contents x-center">
+			<div class="container-booking">
 				<h1 class="text-center">예약하기</h1>
 				
 				<label for="name">이름</label>
@@ -59,47 +59,42 @@
 	<script>
 		$(document).ready(function() {
 			// datepicker
-			$( function() {
-				$( "#date" ).datepicker({dateFormat:"yy-mm-dd"});
-			} );
+			$( "#date" ).datepicker({
+				dateFormat:"yy-mm-dd"
+				, minDate:0
+			});
 			
 			// 예약하기 버튼
 			$("#makeBookingBtn").on('click', function() {
-				// validation
-				let name = $("#name").val();
+				let name = $("#name").val().trim();
+				let date = $("#date").val();
+				let day = $("#day").val().trim();
+				let headcount = $("#headcount").val().trim();
+				let phoneNumber = $("#phoneNumber").val().trim();
 				
+				// validation
 				if (!name) {
 					alert("이름을 입력하세요.");
 					return;
 				}
-				
-				let date = $("#date").val();
-				
 				if (!date) {
 					alert("예약날짜를 입력하세요.");
 					return;
 				}
-				
-				let day = $("#day").val();
-				
 				if (!day) {
 					alert("숙박일수를 입력하세요.");
 					return;
 				}
-				
-				let headcount = $("#headcount").val();
-				
 				if (!headcount) {
 					alert("숙박인원을 입력하세요.");
 					return;
 				}
-				
-				let phoneNumber = $("#phoneNumber").val();
-				
 				if (!phoneNumber) {
 					alert("전화번호를 입력하세요.");
 					return;
 				}
+
+				console.log(name, date, day, headcount, phoneNumber);
 				
 				// AJAX 요청으로 db에 insert
 				$.ajax({
@@ -108,17 +103,18 @@
 					, url:"/booking/make-booking"
 					, data:{"name":name, "date":date, "day":day, "headcount":headcount, "phoneNumber":phoneNumber}
 					
-					//response
+					// response
 					, success:function(data) {
-						// {"code":200, "isInsert":true}
-						if (data.isInsert) {
+						if (data.code == 200) {
+							// {"code":200, "result":"성공"}
 							alert("예약되었습니다.");
-							location.href="/booking/booking-list-view";
-						} else {
+							location.href="/booking/booking-list-view"; // 목록 페이지로 이동
+						} else if(data.code == 500) {
+							// {"code":500, "error_message":"에러 이유"}
 							alert("예약실패. 다시 시도해 주세요.");
 						}
 					}
-					, error:function(error){
+					, error:function(error) {
 						console.log("AJAX: insert 실패");
 					}
 					

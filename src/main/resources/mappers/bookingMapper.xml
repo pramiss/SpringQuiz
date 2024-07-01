@@ -43,7 +43,7 @@
 			, #{day}
 			, #{date}
 			, #{phoneNumber}
-			, "대기중"
+			, '대기중'
 			, NOW()
 			, NOW()
 		)

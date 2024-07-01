@@ -41,18 +41,23 @@ public class BookingController {
 		return "booking/bookingList";
 	}
 	
-	// AJAX 요청 - 예약 삭제
+	// AJAX 요청 - id로 예약 삭제
 	@ResponseBody
 	@DeleteMapping("/delete-booking")
 	public Map<String, Object> deleteBooking(
 			@RequestParam("id") int id) {
 		// delete DB
-		boolean isDelete = bookingBO.deleteBookingById(id);
+		int rowCount = bookingBO.deleteBookingById(id);
 		
 		// return AJAX
 		Map<String, Object> result = new HashMap<>();
-		result.put("code", 200);
-		result.put("is_delete", isDelete);
+		if (rowCount > 0) {
+			result.put("code", 200);
+			result.put("result", "성공");
+		} else {
+			result.put("code", 500);
+			result.put("error_message", "삭제할 데이터가 없습니다.");
+		}
 		return result;
 	}
 	
@@ -72,12 +77,45 @@ public class BookingController {
 			, @RequestParam("headcount") int headcount
 			, @RequestParam("phoneNumber") String phoneNumber) {
 		// DB insert
-		boolean isInsert = bookingBO.addBooking(name, date, day, headcount, phoneNumber);
+		int rowCount = bookingBO.addBooking(name, date, day, headcount, phoneNumber);
 		
 		// return AJAX
 		Map<String, Object> result = new HashMap<>();
-		result.put("code", 200);
-		result.put("isInsert", isInsert);
+		if (rowCount > 0) {
+			result.put("code", 200);
+			result.put("result", "성공");	
+		} else {
+			result.put("code", 500);
+			result.put("error_message", "예약 실패");
+		}
+		
+		return result;
+	}
+	
+	// 조회하기 페이지
+	@GetMapping("/check-booking-view")
+	public String checkBookingView() {
+		return "booking/checkBooking";
+	}
+	
+	// Ajax 요청 - DB에서 조회하기 by 이름, 전화번호
+	@ResponseBody
+	@PostMapping("/check-booking")
+	public Map<String, Object> checkBooking(
+			@RequestParam("name") String name,
+			@RequestParam("phoneNumber") String phoneNumber) {
+		// db에 조회하기
+		Booking booking = bookingBO. ;
+		
+		// ajax 리턴
+		Map<String, Object> result = new HashMap<>();
+		if (booking != null) {
+			result.put("code", 200);
+			result.put("booking", booking);
+		} else {
+			result.put("code", 500);
+			result.put("error_message", "해당하는 예약정보가 없습니다.");
+		}
 		return result;
 	}
 	

@@ -14,14 +14,19 @@ public interface BookingMapper {
 	// SELECT, input: x, output: List<Booking>
 	public List<Booking> selecttBookingList();
 	
-	// DELETE, input: id, output: int
+	// DELETE, input: id, output: rowCount
 	public int deleteBookingById(int id);
 	
-	// INSERT, input: params, output: int
+	// INSERT, input: params, output: rowCount
 	public int insertBooking(
 			@Param("name") String name,
 			@Param("date") LocalDate date,
 			@Param("day") int day,
 			@Param("headcount") int headcount,
+			@Param("phoneNumber") String phoneNumber);
+	
+	// SELECT, input: name, phoneNumber, output: Booking
+	public Booking getBookingByNameAndPhoneNumber(
+			@Param("name") String name,
 			@Param("phoneNumber") String phoneNumber);
 }

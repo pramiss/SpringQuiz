@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="utf-8">
-    <title>예약 목록</title>
+    <title>통나무 - 예약조회</title>
     
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
@@ -25,38 +25,35 @@
 				<li class="nav-item"><a href="/booking/booking-list-view" class="nav-link nav-text">예약목록</a></li>
 			</ul>
 		</nav>
-		<section class="contents">
-			<h1 class="text-center py-2">예약 목록 보기</h1>
-			<table class="table text-center">
-				<thead>
-					<tr>
-						<th>이름</th>
-						<th>예약날짜</th>
-						<th>숙박일수</th>
-						<th>숙박인원</th>
-						<th>전화번호</th>
-						<th>예약상태</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="booking : ${bookingList}">
-						<td th:text="${booking.name}"></td>
-						<td th:text="${#temporals.format(booking.date, 'yyyy년 M월 d일')}"></td>
-						<td th:text="${booking.day}"></td>
-						<td th:text="${booking.headcount}"></td>
-						<td th:text="${booking.phoneNumber}"></td>
-						<td>
-							<span th:if="${booking.state == '대기중'}" class="text-primary" th:text="${booking.state}"></span>
-							<span th:if="${booking.state == '확정'}" class="text-success" th:text="${booking.state}"></span>
-							<span th:if="${booking.state == '취소'}" class="text-danger" th:text="${booking.state}"></span>
-						</td>
-						<td>
-							<button type="button" class="delete-btn btn btn-danger" th:data-booking-id="${booking.id}" th:text="'삭제'"></button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+		<section class="contents-img">
+			<div>
+				<img id="banner" src="/img/test06_banner1.jpg">
+			</div>
+			<div class="d-flex">
+				<div class="reserve-box-side">
+					<div class="display-4">실시간</div>
+					<div class="display-4">예약하기</div>
+				</div>
+				<div class="reserve-box-center">
+					<h2 class="mb-3">예약 확인</h2>
+					<div class="reserve-check">
+						<label for="name">이름</label>
+						<input type="text" id="name" class="form-control">
+					</div>
+					<div class="reserve-check">
+						<label for="phoneNumber">전화번호</label>
+						<input type="text" id="phoneNumber" class="form-control">
+					</div>
+					<div class="d-flex justify-content-end">
+						<button type="button" id="checkBookingBtn" class="btn btn-success">조회하기</button>
+					</div>
+				</div>
+				<div class="reserve-box-side">
+					<h2>예약문의:</h2>
+					<h1>010-</h1>
+					<h1>0000-1111</h1>
+				</div>
+			</div>
 		</section>
 		<footer class="y-center">
 			<small class="text-secondary">
@@ -69,35 +66,63 @@
 	
 	<script>
 		$(document).ready(function() {
+			// 3초 간격으로 배너 이미지 변경
+			let bannerSrcArr = [
+				"/img/test06_banner1.jpg",
+				"/img/test06_banner2.jpg",
+				"/img/test06_banner3.jpg",
+				"/img/test06_banner4.jpg"
+			];
+			let currentIdx = 0;
 			
-			// 삭제 버튼
-			$(".delete-btn").on('click', function() {
-				let id = $(this).data('booking-id');
+			setInterval(function() {
+				$("#banner").attr("src", bannerSrcArr[currentIdx]);
+				currentIdx++;
 				
-				// AJAX - 삭제 by id
+				if (currentIdx >= bannerSrcArr.length) {
+					currentIdx = 0;
+				}
+			}, 3000);
+			
+			// 조회하기 버튼
+			$('#checkBookingBtn').on('click', function() {
+				let name = $('#name').val().trim();
+				let phoneNumber = $('#phoneNumber').val().trim();
+
+				// validation
+				if (!name) {
+					alert("이름을 입력하세요.");
+					return;
+				}
+				if (!phoneNumber) {
+					alert("전화번호를 입력하세요.");
+					return;
+				}
+				
+				// AJAX 요청 - select
 				$.ajax({
 					// request
-					type:"DELETE"
-					, url:"/booking/delete-booking"
-					, data:{"id":id}
+					type:"POST"
+					, url:"/booking/check-booking"
+					, data:{"name":name, "phoneNumber":phoneNumber}
 					
 					// response
 					, success:function(data) {
 						if (data.code == 200) {
-							// {"code":200, "result":"성공"}
-							alert("삭제되었습니다.");
-							location.reload(true);
+							
 						} else if (data.code == 500) {
-							// {"code":500, "error_message":"에러의 원인"}
 							alert(data.error_message);
 						}
 					}
 					, error:function(error) {
-						console.log("AJAX: 삭제실패");
+						alert("error: 조회에 실패했습니다.");
 					}
-				}); //-- ajax
-			}); //-- delete btn
+				});
+			});
+			
+			
 		}); //-- ready
+	
 	</script>
 </body>
 </html>

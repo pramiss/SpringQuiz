@@ -3,11 +3,18 @@
 :root {
 	--nav-link-color: #E3871F;
 	--nav-hover-color: #A76417;
+	--reserve-side-color: #B1520F;
+	--reserve-center-color: #CF6317;
 }
 
+
+
+
+
+
 label {
-	margin-bottom: 5px;
-	margin-top: 10px;
+	margin-bottom: 7px;
+	margin-top: 13px;
 }
  
 .a-center {
@@ -37,12 +44,57 @@ nav {
 	min-height: 600px;
 	padding: 40px 0;
 }
+.contents-img {
+	min-height: 600px;
+}
 footer {
 	height: 100px;
 }
 
+.nav-link {
+	background: var(--nav-link-color);
+	transition: all 0.3s;
+}
+.nav-link:hover {
+	background: var(--nav-hover-color);
+}
 .nav-text, .nav-text:hover {
 	font-weight: bold;
 	color: #fff;
-	background: var(--nav-link-color);
+}
+
+.container-booking {
+	width: 380px;
+}
+
+#banner {
+	width: 100%;
+}
+
+
+.reserve-box-center {
+	color: #fff;
+	width: 33.3333%;
+	background: var(--reserve-center-color);
+	padding: 20px;
+}
+.reserve-box-side {
+	color: #fff;
+	width: 33.3333%;
+	background: var(--reserve-side-color);
+	padding: 60px;
+}
+.reserve-box-side > h2, .reserve-box-side > h1 {
+	margin: 0;
+}
+
+.reserve-check {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	margin: 10px 0;
+}
+.reserve-check input {
+	width: 70%;
+	margin-left: 10px;
 }

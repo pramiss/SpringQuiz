@@ -25,26 +25,19 @@ public class BookingBO {
 	public List<Booking> getBookingList() {
 		return bookingMapper.selecttBookingList();
 	}
-	
-	// DELETE, input: id, output: boolean
-	public boolean deleteBookingById(int id) {
-		int rowCount = bookingMapper.deleteBookingById(id);
-		
-		if (rowCount > 0) {
-			return true;
-		} else {
-			return false;
-		}
+
+	// DELETE, input: id, output: rowCount
+	public int deleteBookingById(int id) {
+		return bookingMapper.deleteBookingById(id);
 	}
 	
-	// INSERT, input: params, output: boolean
-	public boolean addBooking(String name, LocalDate date, int day, int headcount, String phoneNumber) {
-		int rowCount = bookingMapper.insertBooking(name, date, day, headcount, phoneNumber);
-		
-		if (rowCount > 0) {
-			return true;
-		} else {
-			return false;
-		}
+	// INSERT, input: params, output: rowCount
+	public int addBooking(String name, LocalDate date, int day, int headcount, String phoneNumber) {
+		return bookingMapper.insertBooking(name, date, day, headcount, phoneNumber);
+	};
+	
+	// SELECT, input: name, phoneNumber, output: Booking
+	public Booking getBookingByNameAndPhoneNumber(String name, String phoneNumber) {
+		return bookingMapper.
 	};
 }
