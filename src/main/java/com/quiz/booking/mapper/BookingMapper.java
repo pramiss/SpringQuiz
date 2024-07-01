@@ -26,7 +26,7 @@ public interface BookingMapper {
 			@Param("phoneNumber") String phoneNumber);
 	
 	// SELECT, input: name, phoneNumber, output: Booking
-	public Booking getBookingByNameAndPhoneNumber(
+	public Booking selectBookingByNameAndPhoneNumber(
 			@Param("name") String name,
 			@Param("phoneNumber") String phoneNumber);
 }

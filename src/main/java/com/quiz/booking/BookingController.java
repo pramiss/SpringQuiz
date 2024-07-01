@@ -105,7 +105,7 @@ public class BookingController {
 			@RequestParam("name") String name,
 			@RequestParam("phoneNumber") String phoneNumber) {
 		// db에 조회하기
-		Booking booking = bookingBO. ;
+		Booking booking = bookingBO.getBookingByNameAndPhoneNumber(name, phoneNumber) ;
 		
 		// ajax 리턴
 		Map<String, Object> result = new HashMap<>();

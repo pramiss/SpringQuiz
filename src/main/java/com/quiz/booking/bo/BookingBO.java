@@ -38,6 +38,6 @@ public class BookingBO {
 	
 	// SELECT, input: name, phoneNumber, output: Booking
 	public Booking getBookingByNameAndPhoneNumber(String name, String phoneNumber) {
-		return bookingMapper.
+		return bookingMapper.selectBookingByNameAndPhoneNumber(name, phoneNumber);
 	};
 }
