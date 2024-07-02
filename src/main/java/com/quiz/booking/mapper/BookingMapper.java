@@ -25,8 +25,9 @@ public interface BookingMapper {
 			@Param("headcount") int headcount,
 			@Param("phoneNumber") String phoneNumber);
 	
-	// SELECT, input: name, phoneNumber, output: Booking
-	public Booking selectBookingByNameAndPhoneNumber(
+	// SELECT, input: name, phoneNumber, output: List<Booking>
+	// List 리턴시, 없을때: []  있을때: [booking1, booking2 ...]
+	public List<Booking> selectBookingListByNameAndPhoneNumber(
 			@Param("name") String name,
 			@Param("phoneNumber") String phoneNumber);
 }

@@ -36,8 +36,11 @@ public class BookingBO {
 		return bookingMapper.insertBooking(name, date, day, headcount, phoneNumber);
 	};
 	
-	// SELECT, input: name, phoneNumber, output: Booking
-	public Booking getBookingByNameAndPhoneNumber(String name, String phoneNumber) {
-		return bookingMapper.selectBookingByNameAndPhoneNumber(name, phoneNumber);
+	// SELECT, input: name, phoneNumber, output: Booking(최신)
+	// 객체 return시, 없을때: null  있을때: 해당 인스턴스(의 주소)
+	public Booking getLatestBookingByNameAndPhoneNumber(String name, String phoneNumber) {
+		List<Booking> bookingList = bookingMapper.selectBookingListByNameAndPhoneNumber(name, phoneNumber);
+		
+		return bookingList.isEmpty() ? null : bookingList.get(bookingList.size() - 1);
 	};
 }
