@@ -20,5 +20,8 @@ public class Lesson07Quiz01RestController {
 		return companyBO.addCompany("넥손", "컨텐츠 게임", "대기업", 3585);
 	}
 	
-	// @GetMapping("/save2")
+	@GetMapping("/save2")
+	public CompanyEntity save2() {
+		return companyBO.addCompany("버블팡", "여신 금융업", "대기업", 6834);
+	}
 }
