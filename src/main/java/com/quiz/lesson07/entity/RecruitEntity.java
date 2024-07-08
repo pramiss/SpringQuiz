@@ -21,7 +21,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder(toBuilder = true)
+@Builder(toBuilder = true) // toBuilder : 업데이트할때 사용
 @Getter
 @Table(name = "recruit")
 @Entity

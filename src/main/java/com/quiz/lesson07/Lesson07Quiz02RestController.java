@@ -15,18 +15,23 @@ import com.quiz.lesson07.repository.RecruitRepository;
 @RestController
 public class Lesson07Quiz02RestController {
 	
-	@Autowired
 	private RecruitRepository recruitRepository;
 	
-	@GetMapping("/1")
-	public RecruitEntity select1() {
-		return recruitRepository.findById(8).orElse(null);
+	public Lesson07Quiz02RestController(RecruitRepository recruitRepository) {
+		this.recruitRepository = recruitRepository;
 	}
 	
-	@GetMapping("/2")
+	@GetMapping("/1")
+	public RecruitEntity select1(
+			@RequestParam("id") int id) {
+		return recruitRepository.findById(id).orElse(new RecruitEntity());
+	}
+	
+	@GetMapping("/2") // quiz02/2?companyId=1
 	public List<RecruitEntity> select2(
 			@RequestParam("companyId") int companyId) {
 		return recruitRepository.findByCompanyId(companyId);
+		// return recruitRepository.findTop2ByCompanyId(companyId);
 	}
 	
 	@GetMapping("/3")
@@ -36,12 +41,14 @@ public class Lesson07Quiz02RestController {
 	
 	@GetMapping("/4")
 	public List<RecruitEntity> select4() {
-		return recruitRepository.findByTypeOrSalaryGreaterThan("정규직", 9000);
+		// GreaterThan : >
+		// GreaterThanEqual : >=
+		return recruitRepository.findByTypeOrSalaryGreaterThanEqual("정규직", 9000);
 	}
 	
 	@GetMapping("/5")
 	public List<RecruitEntity> select5() {
-		return recruitRepository.findTop3ByOrderBySalaryDesc();
+		return recruitRepository.findTop3ByTypeOrderBySalaryDesc("계약직");
 	}
 	
 	@GetMapping("/6")
@@ -49,6 +56,10 @@ public class Lesson07Quiz02RestController {
 		return recruitRepository.findByRegionAndSalaryBetween("성남시 분당구", 7000, 8500);
 	}
 	
+	@GetMapping("/7")
+	public List<RecruitEntity> select7() {
+		return recruitRepository.findByDeadlineSalaryType("2026-04-10", 8100, "정규직");
+	}
 	
 	
 	
